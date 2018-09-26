@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileDeduplicator.Logging;
+using System;
 
 namespace FileDeduplicator
 {
@@ -7,18 +8,22 @@ namespace FileDeduplicator
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            var fw = new FileWalker();
-            try
+            using (ILogger logger = new ConsoleAndFileLogger("dupa"))
             {
-                fw.ListFiles(@"E:\#Zdjęcia");
+                var fw = new FileWalker(@"E:\#Zdjęcia", logger);
+                try
+                {
+                    fw.DoWork();
+                }
+                catch (OperationCanceledException exc)
+                {
+                    Console.WriteLine("Too much files");
+                }
+                fw.ProcessResult();
+                Console.ReadLine();
             }
-            catch (OperationCanceledException exc)
-            {
-                
-                Console.WriteLine("Too much files");
-            }
-            fw.ProcessResult();
-            Console.ReadLine();
+
+            
         }
     }
 }
