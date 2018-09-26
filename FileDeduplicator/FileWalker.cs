@@ -10,8 +10,6 @@ namespace FileDeduplicator
     class FileWalker
     {
         public Dictionary<string, List<string>> fileToPath = new Dictionary<string, List<string>>();
-        int MAX_COUNT = 100_000;
-        string[] ignoredFileNames = new string[1] { "Thumbs.db" };
 
         ILogger _logger;
         string _path;
@@ -39,7 +37,7 @@ namespace FileDeduplicator
                 ListFiles(dir);
             }
 
-            if (fileToPath.Count > MAX_COUNT)
+            if (fileToPath.Count > FileWalkerConfig.MaxFileProcessed)
                 throw new OperationCanceledException();
 
             return null;
@@ -69,7 +67,7 @@ namespace FileDeduplicator
             _logger.WriteLine();
             int dubbedKeys = 0;
             int dubbedValues = 0;
-            foreach (var item in fileToPath.Where(kv => kv.Value.Count > 2).Where(kv=> !ignoredFileNames.Contains(kv.Key)))
+            foreach (var item in fileToPath.Where(kv => kv.Value.Count > 2).Where(kv=> !FileWalkerConfig.ignoredFileNames.Contains(kv.Key)))
             {
                 dubbedKeys++;
                 Console.WriteLine($"FILE: {item.Key} is in multiple folders:");
@@ -82,7 +80,7 @@ namespace FileDeduplicator
             _logger.WriteLine();
             _logger.WriteLine("SUMMARY of SUMMARY");
             _logger.WriteLine();
-            _logger.WriteLine($"You can remove {dubbedValues-dubbedKeys}");
+            _logger.WriteLine($"You can remove {dubbedValues-dubbedKeys} files");
         }
     }
 }
