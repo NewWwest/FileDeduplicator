@@ -5,20 +5,19 @@ using System.Text;
 
 namespace FileDeduplicator.ArgumentParsing
 {
-    class CLIArgsParser
+    static class CLIArgsParser
     {
-        public Args result;
 
-        public CLIArgsParser(string[] args)
+        public static Args Parse(string[] args)
         {
-            result = new Args();
+            Args result = new Args();
             for (int i = 0; i < args.Length; i++)
             {
-                if(Args.LongParams.Contains(args[i]))
+                if (Args.LongParams.Contains(args[i]))
                 {
                     var key = args[i];
                     key = key.Substring(2, key.Length - 2);
-                    string value = args[i+1];
+                    string value = args[i + 1];
                     result.SetLongParam(key, value);
                     continue;
                 }
@@ -26,12 +25,13 @@ namespace FileDeduplicator.ArgumentParsing
                 {
                     var key = args[i];
                     key = key.Substring(1, key.Length - 1);
-                    string value = args[i+1];
+                    string value = args[i + 1];
                     result.SetShortParam(key, value);
                     continue;
                 }
-                
+
             }
+            return result;
         }
 
         

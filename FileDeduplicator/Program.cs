@@ -10,9 +10,8 @@ namespace FileDeduplicator
 
         static void Main(string[] args)
         {
-
-            var parser = new CLIArgsParser(args);
-            var xd = parser.result;
+            
+            var xd = CLIArgsParser.Parse(args);
             Console.WriteLine("xd.Directory");
             Console.WriteLine(xd.Directory);
             Console.WriteLine("xd.LogFile");
