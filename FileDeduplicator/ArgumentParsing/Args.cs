@@ -8,7 +8,7 @@ namespace FileDeduplicator.ArgumentParsing
     class Args
     {
         public string Directory;
-        public bool LoudConsole;
+        public bool Verbose;
         public string LogFile;
         enum LongParameter
         {
@@ -23,31 +23,31 @@ namespace FileDeduplicator.ArgumentParsing
         public static string[] ShortParams => Enum.GetValues(typeof(ShortParameter)).Cast<ShortParameter>().Select(e => $"-{e.ToString()}").ToArray();
         public static string[] LongParams => Enum.GetValues(typeof(LongParameter)).Cast<LongParameter>().Select(e => $"--{e.ToString()}").ToArray();
 
-        public void SetShortParam(string key, string value)
+        public bool SetShortParam(string key, string value)
         {
             Enum.TryParse(key, out ShortParameter enumKey);
             switch (enumKey)
             {
                 case (ShortParameter.v):
-                    LoudConsole = true;
-                    break;
+                    Verbose = true;
+                    return false;
                 default:
                     DisplayHelp();
                     throw new Exception();
             }
         }
 
-        public void SetLongParam(string key, string value)
+        public bool SetLongParam(string key, string value)
         {
             Enum.TryParse(key, out LongParameter enumKey);
             switch (enumKey)
             {
                 case (LongParameter.Directory):
                     Directory = value;
-                    break;
+                    return true;
                 case (LongParameter.Log):
                     LogFile = value;
-                    break;
+                    return true;
                 default:
                     DisplayHelp();
                     throw new Exception();

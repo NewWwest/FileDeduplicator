@@ -18,7 +18,7 @@ namespace FileDeduplicator.ArgumentParsing
                     var key = args[i];
                     key = key.Substring(2, key.Length - 2);
                     string value = args[i + 1];
-                    result.SetLongParam(key, value);
+                    bool shouldSkipNextValue = result.SetLongParam(key, value);
                     continue;
                 }
                 if (Args.ShortParams.Contains(args[i]))
@@ -26,7 +26,7 @@ namespace FileDeduplicator.ArgumentParsing
                     var key = args[i];
                     key = key.Substring(1, key.Length - 1);
                     string value = args[i + 1];
-                    result.SetShortParam(key, value);
+                    bool shouldSkipNextValue = result.SetShortParam(key, value);
                     continue;
                 }
 
