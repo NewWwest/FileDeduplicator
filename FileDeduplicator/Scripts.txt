@@ -1,2 +1,3 @@
-﻿cd "E:/Projects/FileDeduplicator/FileDeduplicator/bin/Debug/netcoreapp2.0"
+﻿cd "E:/Projects/FileDeduplicator/FileDeduplicator/bin/Release/netcoreapp2.0"
 dotnet FileDeduplicator.dll -v --Directory E:/#Zdjęcia --Log logfile
+
