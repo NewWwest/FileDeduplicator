@@ -2,6 +2,7 @@
 using FileDeduplicator.Logging;
 using System;
 using System.Collections.Generic;
+using FileDeduplicator.Processing;
 
 namespace FileDeduplicator
 {
@@ -14,7 +15,7 @@ namespace FileDeduplicator
             
             Args arguments = CLIArgsParser.Parse(args);
             arguments.Directory = @"E:/#Zdjęcia";
-            arguments.Verbose = false;
+            arguments.Verbose = true;
             arguments.LogFile = "log";
 
             Console.WriteLine("Directory:");
@@ -28,17 +29,9 @@ namespace FileDeduplicator
             
             using (ILogger logger = ArgsToLogger(arguments))
             {
-                var fw = new FileWalker(arguments.Directory, logger);
-                try
-                {
-                    fw.DoWork();
-                }
-                catch (OperationCanceledException exc)
-                {
-                    Console.WriteLine("Too much files");
-                }
-                fw.ProcessResult();
-                
+                new FileWalkerWrapper().DoWork(arguments.Directory, logger);
+
+
             }
             Console.WriteLine("Done");
             Console.ReadLine();

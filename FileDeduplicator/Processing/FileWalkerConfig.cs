@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FileDeduplicator
+namespace FileDeduplicator.Processing
 {
     static class FileWalkerConfig
     {
