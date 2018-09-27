@@ -14,9 +14,6 @@ namespace FileDeduplicator
         {
             
             Args arguments = CLIArgsParser.Parse(args);
-            arguments.Directory = @"E:/#Zdjęcia";
-            arguments.Verbose = true;
-            arguments.LogFile = "log";
 
             Console.WriteLine("Directory:");
             Console.WriteLine(arguments.Directory);
@@ -30,8 +27,6 @@ namespace FileDeduplicator
             using (ILogger logger = ArgsToLogger(arguments))
             {
                 new FileWalkerWrapper().DoWork(arguments.Directory, logger);
-
-
             }
             Console.WriteLine("Done");
             Console.ReadLine();
